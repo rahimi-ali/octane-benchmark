@@ -9,9 +9,11 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-RUN apk add jq
+RUN apt update \
+    && apt install -y curl jq \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN wget -O/usr/local/bin/frankenphp $(wget -O- https://api.github.com/repos/dunglas/frankenphp/releases/latest | jq '.assets[] | select(.name=="frankenphp-linux-x86_64") | .browser_download_url' -r) && chmod +x /usr/local/bin/frankenphp
+RUN curl -L -o /usr/local/bin/frankenphp "https://github.com/dunglas/frankenphp/releases/download/v1.1.0/frankenphp-linux-x86_64" && chmod +x /usr/local/bin/frankenphp
 
 ENTRYPOINT ["php", "artisan", "octane:start", "--server=frankenphp", "--port=9004", "--workers=4", "--host=0.0.0.0"]
 

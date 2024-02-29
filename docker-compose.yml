@@ -8,8 +8,6 @@ services:
         working_dir: /var/www
         volumes:
             - ./:/var/www
-        ports:
-            - "9000:9000"
         deploy:
             resources:
                 limits:
@@ -25,8 +23,6 @@ services:
         working_dir: /var/www
         volumes:
             - ./:/var/www
-        ports:
-            - "9001:9001"
         deploy:
             resources:
                 limits:
@@ -42,8 +38,6 @@ services:
         working_dir: /var/www
         volumes:
             - ./:/var/www
-        ports:
-            - "9002:9002"
         deploy:
             resources:
                 limits:
@@ -59,8 +53,6 @@ services:
         working_dir: /var/www
         volumes:
             - ./:/var/www
-        ports:
-            - "9003:9003"
         deploy:
             resources:
                 limits:
@@ -76,8 +68,6 @@ services:
         working_dir: /var/www
         volumes:
             - ./:/var/www
-        ports:
-            - "9004:9004"
         deploy:
             resources:
                 limits:
@@ -86,3 +76,20 @@ services:
                 reservations:
                     cpus: "4"
                     memory: "4G"
+    nginx:
+        image: nginx:alpine
+        ports:
+            - "9000:9000"
+            - "9001:9001"
+            - "9002:9002"
+            - "9003:9003"
+            - "9004:9004"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/config:/etc/nginx/conf.d
+        depends_on:
+            - fpm
+            - swoole
+            - openswoole
+            - roadrunner
+            - frankenphp
