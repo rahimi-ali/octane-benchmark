@@ -1,0 +1,88 @@
+version: "3.8"
+
+services:
+    fpm:
+        build:
+            context: docker/default
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        ports:
+            - "9000:9000"
+        deploy:
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "4G"
+                reservations:
+                    cpus: "4"
+                    memory: "4G"
+    swoole:
+        build:
+            context: docker/swoole
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        ports:
+            - "9001:9001"
+        deploy:
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "4G"
+                reservations:
+                    cpus: "4"
+                    memory: "4G"
+    openswoole:
+        build:
+            context: docker/openswoole
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        ports:
+            - "9002:9002"
+        deploy:
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "4G"
+                reservations:
+                    cpus: "4"
+                    memory: "4G"
+    roadrunner:
+        build:
+            context: docker/roadrunner
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        ports:
+            - "9003:9003"
+        deploy:
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "4G"
+                reservations:
+                    cpus: "4"
+                    memory: "4G"
+    frankenphp:
+        build:
+            context: docker/frankenphp
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        ports:
+            - "9004:9004"
+        deploy:
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "4G"
+                reservations:
+                    cpus: "4"
+                    memory: "4G"
