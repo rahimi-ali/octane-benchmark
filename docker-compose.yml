@@ -76,6 +76,21 @@ services:
                 reservations:
                     cpus: "4"
                     memory: "4G"
+    opcache:
+        build:
+            context: docker/opcache
+            dockerfile: Dockerfile
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        deploy:
+            resources:
+                limits:
+                    cpus: "4"
+                    memory: "4G"
+                reservations:
+                    cpus: "4"
+                    memory: "4G"
     nginx:
         image: nginx:alpine
         ports:
@@ -84,6 +99,7 @@ services:
             - "9002:9002"
             - "9003:9003"
             - "9004:9004"
+            - "9005:9005"
         volumes:
             - ./:/var/www
             - ./docker/nginx/config:/etc/nginx/conf.d
@@ -93,3 +109,15 @@ services:
             - openswoole
             - roadrunner
             - frankenphp
+            - opcache
+    postgres:
+        image: postgres
+        shm_size: 4G
+        environment:
+            POSTGRES_PASSWORD: root
+            POSTGRES_DB: test
+        volumes:
+            - type: tmpfs
+              target: /dev/shm
+              tmpfs:
+                  size: 4294967296

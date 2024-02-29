@@ -21,3 +21,7 @@ yarn-error.log
 /caddy
 frankenphp
 frankenphp-worker.php
+
+.rr.yaml
+results.bin
+core

@@ -2,21 +2,21 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Product;
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        for ($i = 0; $i < 1000; $i++) {
+            $products = ProductFactory::new()->count(1000)->make();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            $now = now()->toIso8601String();
+            Product::query()->insert(array_map(fn ($x) => [...$x, 'created_at' => $now, 'updated_at' => $now], $products->toArray()));
+
+            echo "Created 1000 products\n";
+        }
     }
 }
